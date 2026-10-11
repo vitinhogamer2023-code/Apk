@@ -1,0 +1,42 @@
+plugins {
+    id 'com.android.application'
+    id 'com.chaquo.python'
+}
+
+android {
+    namespace 'com.btcsignal.watch'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'com.btcsignal.watch'
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName '1.9.0'
+        ndk {
+            // Python 3.12 só tem ABIs de 64 bits (celulares atuais são arm64-v8a)
+            abiFilters "arm64-v8a", "x86_64"
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+}
+
+chaquopy {
+    defaultConfig {
+        version = "3.12"
+        pip {
+            install "websocket-client"
+            install "tzdata"
+        }
+    }
+}
